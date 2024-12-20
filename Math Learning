@@ -1,0 +1,95 @@
+import 'package:flutter/material.dart';
+
+class Exercise {
+  final String question;
+  final String answer;
+  final String explanation;
+
+  Exercise(this.question, this.answer, this.explanation);
+}
+
+final List<Exercise> exercises = [
+  Exercise("How many minutes are there in 3.5 hours?", "210", "3.5 * 60 = 210 minutes."),
+  Exercise("What is 12% of 250?", "30", "12/100 * 250 = 30."),
+  Exercise("What is the solution to the equation 5x + 3 = 28?", "5", "5x = 28 - 3 => 5x = 25 => x = 5."),
+  Exercise("What is the square root of 289?", "17", "17 * 17 = 289."),
+  Exercise("If the annual interest rate is 5%, how much will \$1000 be worth in 3 years with compound interest?", "1157.63", "1000 * (1 + 0.05)^3 = 1157.63."),
+  Exercise("Calculate 7! (factorial of 7)", "5040", "7! = 7 * 6 * 5 * 4 * 3 * 2 * 1 = 5040."),
+  Exercise("Find the cube root of 64.", "4", "4 * 4 * 4 = 64."),
+  Exercise("What is the area of a circle with a radius of 5?", "78.54", "Area = π * r² = 3.14 * 5 * 5 = 78.54."),
+  Exercise("If a = 3 and b = 4, find the hypotenuse of the triangle using the Pythagorean theorem.", "5", "c = √(a² + b²) = √(3² + 4²) = 5."),
+  Exercise("How far will a car traveling at 60 km/h go in 2.5 hours?", "150", "Distance = speed * time = 60 * 2.5 = 150 km."),
+  Exercise("If you have 200 apples and want to share them among 8 people, how many apples will be left?", "4", "200 / 8 = 25, remainder 0, 200 - 25*8 = 0."),
+];
+
+class ExercisesScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Math Exercises'),
+      ),
+      body: ListView.builder(
+        itemCount: exercises.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(exercises[index].question),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ExerciseDetailScreen(exercises[index]),
+                ),
+              );
+            },
+          );
+        },
+      ),
+    );
+  }
+}
+
+class ExerciseDetailScreen extends StatelessWidget {
+  final Exercise exercise;
+
+  ExerciseDetailScreen(this.exercise);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Exercise Details'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Question: ${exercise.question}', style: TextStyle(fontSize: 24)),
+            SizedBox(height: 20),
+            Text('Answer: ${exercise.answer}', style: TextStyle(fontSize: 20)),
+            SizedBox(height: 20),
+            Text('Explanation: ${exercise.explanation}', style: TextStyle(fontSize: 16)),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Math Learning',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: ExercisesScreen(),
+    );
+  }
+}
